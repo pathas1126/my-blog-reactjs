@@ -3,6 +3,7 @@ import axios from "axios";
 
 const App = () => {
   const [host, setHost] = useState("");
+  const [test, setTest] = useState("");
 
   useEffect(() => {
     const _getHost = async () => {
@@ -10,6 +11,15 @@ const App = () => {
       setHost(res.data.host);
     };
     _getHost();
+  }, []);
+
+  useEffect(() => {
+    const _dbTest = async () => {
+      const res = await axios.get("/api/test");
+      setTest(res.data);
+      console.log(res.data);
+    };
+    _dbTest();
   }, []);
 
   return (
