@@ -7,9 +7,9 @@ const app = express();
 // PORT 번호 설정
 const PORT = process.env.PORT || 4000;
 
-// 서버 응답 출력, get() 메소드
-app.get("/", (req, res) => {
-  res.send(`Response Complete`);
+// 라우터 설정(서버 응답 출력), get() 메소드
+app.get("/api/host", (req, res) => {
+  res.send({ host: "pathas" });
 });
 
 // 지정한 PORT 번호로 서버를 구동시킴, listen() 메소드 사용
