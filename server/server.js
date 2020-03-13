@@ -6,9 +6,37 @@ const app = express();
 
 // Sequeilize
 const sequelize = require("./models").sequelize;
+const bodyParser = require("body-parser");
+
 sequelize.sync();
 
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Teacher 테이블을 가져와서 서버에서 읽을 수 있도록 함
+const {
+  Teacher,
+  Sequelize: { Op }
+} = require("./models");
+sequelize.query("SET NAMES utf8");
+
+// client로부터 받아오는 값을 조회할 수 있는 API 작성
+app.post("/add/data", (req, res) => {
+  console.log(req.body);
+
+  Teacher.create({
+    name: req.body.data
+  })
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+      throw err;
+    });
+});
 
 // PORT 번호 설정
 const PORT = process.env.PORT || 4000;
