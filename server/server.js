@@ -22,7 +22,7 @@ const {
 } = require("./models");
 sequelize.query("SET NAMES utf8");
 
-// client로부터 받아오는 값을 조회할 수 있는 API 작성
+// client로부터 추가된 값을 조회할 수 있는 API 작성
 app.post("/add/data", (req, res) => {
   console.log(req.body);
 
@@ -34,6 +34,18 @@ app.post("/add/data", (req, res) => {
     })
     .catch(err => {
       console.log(err);
+      throw err;
+    });
+});
+
+// /get/data로 요청이 들어온 경우 Teacher 테이블의 모든 데이터를
+// Client로 전송하는 코드
+app.get("/get/data", (req, res) => {
+  Teacher.findAll()
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
       throw err;
     });
 });

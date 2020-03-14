@@ -3,7 +3,9 @@ import axios from "axios";
 
 const App = () => {
   const [name, setName] = useState("");
+  const [list, setList] = useState("");
 
+  // 데이터 추가 함수
   const _addData = async e => {
     e.preventDefault();
 
@@ -19,9 +21,28 @@ const App = () => {
     }
   };
 
+  // input value 변경 함수
   const _nameUpdate = e => {
     setName(e.target.value);
   };
+
+  // 데이터 조회 함수
+  useEffect(() => {
+    const _getData = async () => {
+      const res = await axios.get("/get/data");
+
+      // 데이터 형식이
+      if (res.data[0] === undefined) {
+        console.log("데이터가 배열 형식이 아닙니다.");
+        let cover = [];
+        cover.push(res.data);
+        return setList(cover);
+      }
+      setList(res.data);
+    };
+
+    _getData();
+  }, []);
 
   /* 
   
@@ -66,6 +87,51 @@ const App = () => {
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />
       </form>
+      <br />
+      <br />
+      <div style={{ height: "250px", overflos: "auto" }}>
+        <h4 style={{ color: "#ababab" }}>Theachers List</h4>
+
+        <div
+          style={{
+            border: "solid 1px black",
+            width: "50%",
+            marginLeft: "25%",
+            textAlign: "left"
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "32% 35% 30%",
+              textAlign: "center"
+            }}
+          >
+            <div>Number</div>
+            <div>Name</div>
+            <div>Other</div>
+          </div>
+
+          {list.length !== 0 &&
+            list.map((el, key) => {
+              return (
+                <div
+                  key={key}
+                  style={{
+                    display: "grid",
+                    lineHeight: "40px",
+                    gridTemplateColumns: "32% 35%",
+                    width: "50%",
+                    marginLeft: "25%"
+                  }}
+                >
+                  <div className="">{el.id}</div>
+                  <div className="">{el.name}</div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
     </div>
   );
 };
