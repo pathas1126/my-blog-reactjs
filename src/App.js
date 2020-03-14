@@ -31,7 +31,7 @@ const App = () => {
     const _getData = async () => {
       const res = await axios.get("/get/data");
 
-      // 데이터 형식이
+      // 데이터 형식이 배열이 아닌 경우 배열로 바꾸어서 처리해주는 함수
       if (res.data[0] === undefined) {
         console.log("데이터가 배열 형식이 아닙니다.");
         let cover = [];
@@ -43,6 +43,29 @@ const App = () => {
 
     _getData();
   }, []);
+
+  // 데이터 수정 메소드
+  const _modify = async el => {
+    const modify = prompt(el.name + "을 어떤 이름으로 변경할까요?");
+
+    if (modify !== null) {
+      const body = {
+        name: modify,
+        id: el.id
+      };
+
+      const res = await axios("/modify/data", {
+        method: "POST",
+        data: { modify: body },
+        headers: new Headers()
+      });
+
+      if (res.data) {
+        alert("데이터를 수정했습니다.");
+        return window.location.reload();
+      }
+    }
+  };
 
   /* 
   
@@ -114,19 +137,26 @@ const App = () => {
 
           {list.length !== 0 &&
             list.map((el, key) => {
+              console.log(el);
               return (
                 <div
                   key={key}
                   style={{
                     display: "grid",
                     lineHeight: "40px",
-                    gridTemplateColumns: "32% 35%",
+                    gridTemplateColumns: "32% 35% 30%",
                     width: "50%",
                     marginLeft: "25%"
                   }}
                 >
                   <div className="">{el.id}</div>
                   <div className="">{el.name}</div>
+                  <div
+                    style={{ color: "#ababab", cursor: "pointer" }}
+                    onClick={() => _modify(el)}
+                  >
+                    Modify
+                  </div>
                 </div>
               );
             })}

@@ -50,6 +50,20 @@ app.get("/get/data", (req, res) => {
     });
 });
 
+// 데이터 수정 코드
+app.post("/modify/data", (req, res) => {
+  Teacher.update(
+    { name: req.body.modify.name },
+    { where: { id: req.body.modify.id } }
+  )
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      throw err;
+    });
+});
+
 // PORT 번호 설정
 const PORT = process.env.PORT || 4000;
 
