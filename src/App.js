@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Route, Link, Switch } from "react-router-dom";
 
-import { Home, Test } from "./inc";
+import { Header } from "./inc";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -125,9 +125,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h3>
-        Welcome to <u>pathas</u> Blog!
-      </h3>
+      <Header />
       <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />
@@ -189,20 +187,6 @@ const App = () => {
             })}
         </div>
       </div>
-      <Route exact path="/" component={Home} />
-      <Switch>
-        <Route path="/test/:data/:age" component={Test} />
-        <Route path="/test/:data" component={Test} />
-        <Route path="/test" component={Test} />
-      </Switch>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/test">Test</Link>
-        </li>
-      </ul>
     </div>
   );
 };
