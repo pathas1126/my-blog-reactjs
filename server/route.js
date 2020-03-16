@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require("./controller");
 
 router.post("/send/pw", controller.api.sendPw);
+router.post("/add/board", controller.api.board);
 
 // 라우터 경로 설정
 // router.HTTP 메소드 형태

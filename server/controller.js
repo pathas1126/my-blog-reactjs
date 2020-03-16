@@ -21,6 +21,15 @@ module.exports = {
         }
         res.send(obj);
       });
+    },
+    board: (req, res) => {
+      const body = req.body;
+
+      model.add.board(body, result => {
+        if (result) {
+          res.send(true);
+        }
+      });
     }
     /*
     getData: (req, res) => {

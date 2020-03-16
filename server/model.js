@@ -3,6 +3,7 @@ const sequelize = require("./models").sequelize;
 // admins 테이블을 불러오는 코드
 const {
   Admin,
+  Board,
   Sequelize: { Op }
 } = require("./models");
 
@@ -13,6 +14,21 @@ module.exports = {
     searchInfo: (body, hash, callback) => {
       Admin.findAll({
         where: { [Op.and]: [{ user_id: body.id, password: hash }] }
+      })
+        .then(data => {
+          callback(data);
+        })
+        .catch(err => {
+          throw err;
+        });
+    }
+  },
+  add: {
+    board: (body, callback) => {
+      Board.create({
+        title: body.title,
+        contents: body.contents,
+        date: new Date(86400000)
       })
         .then(data => {
           callback(data);
