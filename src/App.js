@@ -5,6 +5,7 @@ import { Route, Link, Switch } from "react-router-dom";
 import { Header } from "./inc";
 
 const App = () => {
+  /* 
   const [name, setName] = useState("");
   const [list, setList] = useState("");
 
@@ -88,45 +89,12 @@ const App = () => {
       }
     }
   };
-
-  /* 
-  
-  useEffect(() => {
-    const _getHost = async () => {
-        const res = await axios.get("api/host");
-        setHost(res.data.host);
-      };
-      _getHost();
-    }, []);
-    const [test, setTest] = useState("");
-
-    useEffect(() => {
-    const _dbTest = async () => {
-      const res = await axios.get("/api/test");
-      setTest(res.data);
-      console.log(res.data);
-    };
-    _dbTest();
-  }, []);
-  
-      useEffect(() => {
-        const _addData = async e => {
-          console.log(
-            await axios("/add/data", {
-              method: "POST",
-              data: { test: "Complete!" },
-              headers: new Headers()
-            })
-          );
-        };
-        _addData();
-      }, []);
   */
 
   return (
     <div className="App">
       <Header />
-      <form method="POST" onSubmit={_addData}>
+      {/* <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />
       </form>
@@ -186,7 +154,7 @@ const App = () => {
               );
             })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

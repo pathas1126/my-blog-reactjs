@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import "../App.css";
 import axios from "axios";
 
@@ -9,23 +9,55 @@ const Header = () => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
+  const [login, setLogin] = useState(false);
 
   const idRef = useRef();
   const pwdRef = useRef();
 
   useEffect(() => {
-    console.log("아이디: " + id + ", 비번: " + pwd);
-  }, [id, pwd]);
+    if (sessionStorage.login) {
+      setLogin(true);
+    }
+  }, []);
 
-  // pwd 서버로 전송
+  // 로그인 함수, id, pwd 서버로 전송
   const _selectUserData = async e => {
+    setId(id.trim());
+    setPwd(pwd.trim());
+
+    if (id === "") {
+      return alert("아이디를 입력해 주세요!!");
+    } else if (pwd === "") {
+      return alert("비밀번호를 입력해 주세요!!");
+    }
+
+    const obj = { id: id, pwd: pwd };
+
     const res = await axios("/send/pw", {
       method: "POST",
-      data: { id, pwd },
+      data: obj,
       header: new Headers()
     });
     if (res.data) {
-      console.log(res.data);
+      console.log(res.data.msg);
+
+      if (res.data.suc) {
+        sessionStorage.setItem("login", true);
+        setLogin(true);
+        _closeModal();
+
+        return alert("로그인 되었습니다.");
+      } else {
+        return alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+      }
+    }
+  };
+
+  // 로그아웃 함수
+  const _logout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      sessionStorage.removeItem("login");
+      setLogin(false);
     }
   };
 
@@ -56,13 +88,20 @@ const Header = () => {
           <h3>Pathas' blog</h3>
         </Link>
       </div>
-      <h5
-        onClick={() => {
-          _openModal();
-        }}
-      >
-        관리자 로그인
-      </h5>
+      {login ? (
+        <h5 className="btn_cursor" onClick={_logout}>
+          관리자 로그아웃
+        </h5>
+      ) : (
+        <h5
+          className="btn_cursor"
+          onClick={() => {
+            _openModal();
+          }}
+        >
+          관리자 로그인
+        </h5>
+      )}
       <div className="acenter">
         <Modal
           visible={visible}

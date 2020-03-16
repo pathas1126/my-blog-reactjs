@@ -22,6 +22,14 @@ app.use(bodyParser.json());
 // router, app이 '/' 경로로 요청을 받을 때마다 router 호출
 app.use("/", router);
 
+// PORT 번호 설정
+const PORT = process.env.PORT || 4000;
+
+// 지정한 PORT 번호로 서버를 구동시킴, listen() 메소드 사용
+app.listen(PORT, () => {
+  console.log(`Server On: http://localhost:${PORT}/`);
+});
+
 // // client로부터 추가된 값을 조회할 수 있는 API 작성
 // app.post("/add/data", (req, res) => {
 //   console.log(req.body);
@@ -74,14 +82,6 @@ app.use("/", router);
 //       throw err;
 //     });
 // });
-
-// PORT 번호 설정
-const PORT = process.env.PORT || 4000;
-
-// 지정한 PORT 번호로 서버를 구동시킴, listen() 메소드 사용
-app.listen(PORT, () => {
-  console.log(`Server On: http://localhost:${PORT}/`);
-});
 
 // 라우터 설정(서버 응답 출력), get() 메소드
 app.get("/api/host", (req, res) => {

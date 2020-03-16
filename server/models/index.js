@@ -33,9 +33,11 @@ db.sequelize
   });
 
 // 생성한 테이블 연결
+/*
 db.Teacher = require("./teacher")(sequelize, Sequelize);
 
 db.Class = require("./class")(sequelize, Sequelize);
+*/
 
 db.Admin = require("./admin")(sequelize, Sequelize);
 
@@ -60,6 +62,8 @@ db.Class.belongsTo(db.Teacher, {
 });
 */
 
+/*
+테이블 관계 설정
 db.Teacher.belongsToMany(db.Class, {
   through: "scedule",
   foreignKey: "teacher_id"
@@ -69,6 +73,7 @@ db.Class.belongsToMany(db.Teacher, {
   through: "scedule",
   foreignKey: "class_id"
 });
+*/
 
 db.secret = "(9*)5$&!3%^0%^@@2$1!#5@2!4";
 module.exports = db;
