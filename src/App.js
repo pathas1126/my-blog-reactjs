@@ -42,7 +42,7 @@ const App = () => {
     };
 
     _getData();
-  }, []);
+  }, [list]);
 
   // 데이터 수정 메소드
   const _modify = async el => {
@@ -62,6 +62,25 @@ const App = () => {
 
       if (res.data) {
         alert("데이터를 수정했습니다.");
+        return window.location.reload();
+      }
+    }
+  };
+
+  // 데이터 삭제 메소드
+  const _delete = async el => {
+    const remove = window.confirm(el.name + "을 삭제합니까?");
+
+    if (remove) {
+      const body = { id: el.id };
+      const res = await axios("/delete/data", {
+        method: "POST",
+        data: { delete: body },
+        headers: new Headers()
+      });
+
+      if (res.data) {
+        alert("데이터를 삭제했습니다.");
         return window.location.reload();
       }
     }
@@ -137,14 +156,13 @@ const App = () => {
 
           {list.length !== 0 &&
             list.map((el, key) => {
-              console.log(el);
               return (
                 <div
                   key={key}
                   style={{
                     display: "grid",
                     lineHeight: "40px",
-                    gridTemplateColumns: "32% 35% 30%",
+                    gridTemplateColumns: "35% 35% 35% 0%",
                     width: "50%",
                     marginLeft: "25%"
                   }}
@@ -156,6 +174,12 @@ const App = () => {
                     onClick={() => _modify(el)}
                   >
                     Modify
+                  </div>
+                  <div
+                    style={{ color: "#ababab", cursor: "pointer" }}
+                    onClick={() => _delete(el)}
+                  >
+                    Delete
                   </div>
                 </div>
               );

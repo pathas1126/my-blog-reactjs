@@ -64,6 +64,17 @@ app.post("/modify/data", (req, res) => {
     });
 });
 
+// 데이터 삭제 요청 처리 코드
+app.post("/delete/data", (req, res) => {
+  Teacher.destroy({ where: { id: req.body.delete.id } })
+    .then(res => {
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      throw err;
+    });
+});
+
 // PORT 번호 설정
 const PORT = process.env.PORT || 4000;
 
