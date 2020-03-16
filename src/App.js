@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Route, Link, Switch } from "react-router-dom";
+
+import { Home, Test } from "./inc";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -186,6 +189,20 @@ const App = () => {
             })}
         </div>
       </div>
+      <Route exact path="/" component={Home} />
+      <Switch>
+        <Route path="/test/:data/:age" component={Test} />
+        <Route path="/test/:data" component={Test} />
+        <Route path="/test" component={Test} />
+      </Switch>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/test">Test</Link>
+        </li>
+      </ul>
     </div>
   );
 };
