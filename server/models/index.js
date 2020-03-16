@@ -37,6 +37,8 @@ db.Teacher = require("./teacher")(sequelize, Sequelize);
 
 db.Class = require("./class")(sequelize, Sequelize);
 
+db.Admin = require("./admin")(sequelize, Sequelize);
+
 // DB 관계 설정, foreignKey, Source - Target
 
 /*

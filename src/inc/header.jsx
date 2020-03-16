@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 import "../App.css";
+import axios from "axios";
 
 import Modal from "react-awesome-modal";
 
@@ -16,6 +17,19 @@ const Header = () => {
     console.log("아이디: " + id + ", 비번: " + pwd);
   }, [id, pwd]);
 
+  // pwd 서버로 전송
+  const _selectUserData = async e => {
+    const res = await axios("/send/pw", {
+      method: "POST",
+      data: { id, pwd },
+      header: new Headers()
+    });
+    if (res.data) {
+      console.log(res.data);
+    }
+  };
+
+  // 모달 열고 닫기
   const _openModal = () => {
     setVisible(true);
   };
@@ -24,6 +38,7 @@ const Header = () => {
     setVisible(false);
   };
 
+  // input 값 가져오기
   const _changeId = () => {
     const id = idRef.current.value;
     setId(id);
@@ -84,7 +99,13 @@ const Header = () => {
           </form>
           <div className="submit_div">
             <div>
-              <input type="button" value="로그인" />
+              <input
+                type="button"
+                value="로그인"
+                onClick={() => {
+                  _selectUserData();
+                }}
+              />
             </div>
             <div>
               <input value="취소" type="button" onClick={() => _closeModal()} />

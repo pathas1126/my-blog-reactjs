@@ -1,8 +1,17 @@
 const path = require("path");
 const model = require("./model");
 
+const hashing = require(path.join(__dirname, "config", "hashing.js"));
+const salt = require(path.join(__dirname, "config", "db.json")).salt;
+
 module.exports = {
   api: {
+    sendPw: (req, res) => {
+      const body = req.body;
+      const hash = hashing.enc(body.id, body.pwd, salt);
+      console.log("salt>>>>>>> " + salt);
+      console.log("hash>>>>>>>>>>" + hash);
+    },
     getData: (req, res) => {
       console.log("컨트롤러 연결 성공!!");
       model.api.getData(data => {
