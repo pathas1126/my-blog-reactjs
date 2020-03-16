@@ -3,6 +3,7 @@ import axios from "axios";
 import { Route, Link, Switch } from "react-router-dom";
 
 import { Header } from "./inc";
+import { Main } from "./page";
 
 const App = () => {
   /* 
@@ -94,6 +95,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+      <Main />
       {/* <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />

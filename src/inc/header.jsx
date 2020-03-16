@@ -81,7 +81,13 @@ const Header = () => {
   };
   return (
     <div className="header_grid">
-      <div></div>
+      <div className="acenter">
+        {login && (
+          <h5>
+            <Link to="/write">포스트 작성</Link>
+          </h5>
+        )}
+      </div>
       <div className="acenter">
         <Route path="/" />
         <Link className="link_tit" to="/">
