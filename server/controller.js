@@ -6,6 +6,7 @@ const salt = require(path.join(__dirname, "config", "db.json")).salt;
 
 module.exports = {
   api: {
+    // 관리자 로그인
     sendPw: (req, res) => {
       const body = req.body;
       const hash = hashing.enc(body.id, body.pwd, salt);
@@ -22,6 +23,7 @@ module.exports = {
         res.send(obj);
       });
     },
+    // 게시글 추가
     board: (req, res) => {
       const body = req.body;
 
@@ -52,5 +54,22 @@ module.exports = {
       model.api.deleteData(req);
       return res.send({});
     }*/
+  },
+  // 게시글, 수 가져오기
+  get: {
+    board: (req, res) => {
+      const body = req.body;
+      model.get.board(body, result => {
+        if (result) {
+          res.send(result);
+        }
+      });
+    },
+    board_cnt: (req, res) => {
+      model.get.board_cnt(cnt => {
+        const result = { cnt };
+        res.send(result);
+      });
+    }
   }
 };
