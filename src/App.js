@@ -42,7 +42,7 @@ const App = () => {
     };
 
     _getData();
-  }, [list]);
+  }, []);
 
   // 데이터 수정 메소드
   const _modify = async el => {
@@ -79,7 +79,7 @@ const App = () => {
         headers: new Headers()
       });
 
-      if (res.data) {
+      if (res) {
         alert("데이터를 삭제했습니다.");
         return window.location.reload();
       }
