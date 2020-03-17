@@ -81,5 +81,16 @@ module.exports = {
         res.send(result);
       });
     }
+  },
+  update: {
+    view_cnt: (req, res) => {
+      const body = req.body;
+
+      model.update.view_cnt(body, result => {
+        if (result) {
+          res.send(true);
+        }
+      });
+    }
   }
 };

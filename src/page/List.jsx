@@ -74,7 +74,7 @@ const List = props => {
   const list = data.data;
 
   return (
-    <div classNmae="List">
+    <div className="List">
       <div className="list_grid list_tit">
         <div>제목</div>
         <div>조회수</div>

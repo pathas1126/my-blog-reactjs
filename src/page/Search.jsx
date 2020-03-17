@@ -16,7 +16,7 @@ const Search = props => {
         <input
           ref={inputRef}
           type="text"
-          maxLengt="20"
+          maxLength="20"
           className="search_input"
           name="search"
           placeholder="검색어를 입력하세요"

@@ -4,10 +4,11 @@ import axios from "axios";
 
 const View = props => {
   const [data, setData] = useState({});
+  const board_id = props.match.params.data;
+
+  // board_id에 맞는 게시글 가져오기
   useEffect(() => {
-    // board_id에 맞는 게시글 가져오기
     const _getData = async () => {
-      const board_id = props.match.params.data;
       const getData = await axios("/get/board_data", {
         method: "POST",
         headers: new Headers(),
@@ -18,6 +19,18 @@ const View = props => {
       setData(getData.data.data[0]);
     };
     _getData();
+  }, []);
+
+  // board_id 게시글 조회수 증가 함수
+  useEffect(() => {
+    const _addViewCnt = async board_id => {
+      const addView = await axios("/update/view_cnt", {
+        method: "POST",
+        header: new Headers(),
+        data: { id: board_id }
+      });
+    };
+    _addViewCnt(board_id);
   }, []);
 
   // 날짜 구하기

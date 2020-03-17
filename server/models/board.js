@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       date: {
         type: DataTypes.DATE,
         allowNull: false
+      },
+      view_cnt: {
+        type: DataTypes.INTEGER(10),
+        allowNull: false,
+        defaultValue: 0
       }
     },
     { charset: "utf8", collate: "utf8_general_ci", timestamps: false }
