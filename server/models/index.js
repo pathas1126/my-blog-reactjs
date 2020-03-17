@@ -41,8 +41,17 @@ db.Class = require("./class")(sequelize, Sequelize);
 
 db.Admin = require("./admin")(sequelize, Sequelize);
 db.Board = require("./board")(sequelize, Sequelize);
+db.Category = require("./category")(sequelize, Sequelize);
 
 // DB 관계 설정, foreignKey, Source - Target
+db.Category.hasMany(db.Board, {
+  foreignKey: "cat_id",
+  sourceKey: "id"
+});
+db.Board.belongsTo(db.Category, {
+  foreignKey: "cat_id",
+  targetKey: "id"
+});
 
 /*
 1 to 1 관계

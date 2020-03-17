@@ -16,25 +16,28 @@ const List = props => {
 
   useEffect(() => {
     const _getListData = async () => {
+      let { category } = props;
+      if (sessionStorage.getItem("category")) {
+        category = sessionStorage.getItem("category");
+      }
+
       setPage(_setPage());
 
       // 검색 submit으로 전송된 쿼리스트링 파싱, 저장
       let search = queryString.parse(props.location.search);
       if (search) search = search.search;
-      console.log(search);
 
       // DB에 저장된 게시글 수 가져오기
       const total_cnt = await axios("get/board_cnt", {
         method: "POST",
         header: new Headers(),
-        data: { search }
+        data: { search, category }
       });
-      console.log(total_cnt.data.cnt);
 
       // DB 게시글 목록 가져오기
       const total_list = await axios("/get/board", {
         method: "POST",
-        data: { limit: PAGE_LIMIT, page, search },
+        data: { limit: PAGE_LIMIT, page, search, category },
         headers: new Headers()
       });
 
@@ -44,7 +47,6 @@ const List = props => {
       for (let i = 1; i <= Math.ceil(total_cnt.data.cnt / PAGE_LIMIT); i++) {
         page_arr.push(i);
       }
-      console.log(page_arr);
 
       setData(total_list);
       setAll_page(page_arr);
@@ -56,7 +58,6 @@ const List = props => {
 
   // 클릭하는 페이지로 현재 페이지 바꾸기
   const _changePage = el => {
-    console.log(el);
     setPage(el);
     sessionStorage.setItem("page", el);
   };
@@ -70,7 +71,6 @@ const List = props => {
     setPage(1);
     return 1;
   };
-  console.log(data);
   const list = data.data;
 
   return (

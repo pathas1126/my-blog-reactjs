@@ -4,6 +4,7 @@ const sequelize = require("./models").sequelize;
 const {
   Admin,
   Board,
+  Category,
   Sequelize: { Op }
 } = require("./models");
 
@@ -29,7 +30,8 @@ module.exports = {
         title: body.title,
         contents: body.contents,
         date: Date.now(),
-        view_cnt: 0
+        view_cnt: 0,
+        cat_id: 0
       })
         .then(data => {
           callback(data);
@@ -53,7 +55,8 @@ module.exports = {
           },
           contents: {
             [Op.like]: search
-          }
+          },
+          cat_id: body.category
         },
         limit: body.page * body.limit,
         offset: (body.page - 1) * body.limit,
@@ -78,7 +81,8 @@ module.exports = {
           },
           contents: {
             [Op.like]: search
-          }
+          },
+          cat_id: body.category
         }
       }).then(result => {
         callback(result);
@@ -91,6 +95,13 @@ module.exports = {
         .then(result => {
           callback(result);
         })
+        .catch(err => {
+          throw err;
+        });
+    },
+    category: callback => {
+      Category.findAll()
+        .then(result => callback(result))
         .catch(err => {
           throw err;
         });

@@ -80,6 +80,11 @@ module.exports = {
         const result = { data };
         res.send(result);
       });
+    },
+    category: (req, res) => {
+      model.get.category(data => {
+        res.send(data);
+      });
     }
   },
   update: {

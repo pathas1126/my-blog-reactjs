@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 
 const Write = props => {
-  console.log(props);
   return (
     <div className="Write">
       <div>

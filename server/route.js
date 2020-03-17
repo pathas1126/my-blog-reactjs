@@ -20,6 +20,9 @@ router.post("/get/board_data", controller.get.board_data);
 // View 게시글 조회수 증가
 router.post("/update/view_cnt", controller.update.view_cnt);
 
+// Category 정보 조회
+router.get("/get/category", controller.get.category);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*
