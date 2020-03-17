@@ -109,3 +109,23 @@
   display: inline-block;
   cursor: pointer;
 }
+
+/* SEARCH */
+.search_input {
+  padding: 2px;
+  margin-right: 5px;
+  margin-top: 15px;
+  width: 200px;
+}
+
+.search_submit {
+  position: absolute;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.not_data {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #ababab;
+}

@@ -66,7 +66,9 @@ module.exports = {
       });
     },
     board_cnt: (req, res) => {
-      model.get.board_cnt(cnt => {
+      const body = req.body;
+
+      model.get.board_cnt(body, cnt => {
         const result = { cnt };
         res.send(result);
       });

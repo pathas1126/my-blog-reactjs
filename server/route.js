@@ -12,7 +12,7 @@ router.post("/add/board", controller.api.board);
 router.post("/get/board", controller.get.board);
 
 // 게시글 수 가져오기
-router.get("/get/board_cnt", controller.get.board_cnt);
+router.post("/get/board_cnt", controller.get.board_cnt);
 
 // 라우터 경로 설정
 // router.HTTP 메소드 형태

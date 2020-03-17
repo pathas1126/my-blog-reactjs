@@ -1,25 +1,39 @@
 import React, { useState, useEffect } from "react";
 import "./Main.css";
+import { Search } from "./index";
+
+import queryString from "query-string";
+
 import axios from "axios";
 
 const List = props => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [all_page, setAll_page] = useState([]);
+  const [search, setSearch] = useState("");
   const PAGE_LIMIT = 10;
 
   useEffect(() => {
     const _getListData = async () => {
       setPage(_setPage());
 
+      // 검색 submit으로 전송된 쿼리스트링 파싱, 저장
+      let search = queryString.parse(props.location.search);
+      if (search) search = search.search;
+      console.log(search);
+
       // DB에 저장된 게시글 수 가져오기
-      const total_cnt = await axios("get/board_cnt");
+      const total_cnt = await axios("get/board_cnt", {
+        method: "POST",
+        header: new Headers(),
+        data: { search }
+      });
       console.log(total_cnt.data.cnt);
 
       // DB 게시글 목록 가져오기
       const total_list = await axios("/get/board", {
         method: "POST",
-        data: { limit: PAGE_LIMIT, page },
+        data: { limit: PAGE_LIMIT, page, search },
         headers: new Headers()
       });
 
@@ -33,6 +47,7 @@ const List = props => {
 
       setData(total_list);
       setAll_page(page_arr);
+      setSearch(search);
     };
     _getListData();
     _setPage();
@@ -64,7 +79,7 @@ const List = props => {
         <div>조회수</div>
         <div className="acenter">날짜</div>
       </div>
-      {list &&
+      {list && list.length > 0 ? (
         list.map((el, key) => {
           return (
             <div className="list_grid list_data" key={key}>
@@ -73,7 +88,16 @@ const List = props => {
               <div className="acenter">{el.date.slice(0, 10)}</div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="not_data acenter">
+          {search !== "" ? (
+            <div>검색된 결과가 없습니다.</div>
+          ) : (
+            <div>데이터가 없습니다.</div>
+          )}
+        </div>
+      )}
       <div className="paging_div">
         <div></div>
         <div>
@@ -95,6 +119,7 @@ const List = props => {
                 );
               })}
           </ul>
+          <Search search={search} />
         </div>
       </div>
     </div>
