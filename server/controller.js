@@ -86,11 +86,24 @@ module.exports = {
     view_cnt: (req, res) => {
       const body = req.body;
 
-      model.update.view_cnt(body, result => {
-        if (result) {
-          res.send(true);
-        }
-      });
+      // 게시글 조회수 중복 증가 방지, 쿠키 활용
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 1);
+
+      const cookie_name = "board_" + body.id;
+      const exist_cookie = req.cookies[cookie_name];
+
+      if (!exist_cookie) {
+        res.cookie(cookie_name, true, {
+          expires
+        });
+
+        model.update.view_cnt(body, result => {
+          if (result) {
+            res.send(true);
+          }
+        });
+      }
     }
   }
 };

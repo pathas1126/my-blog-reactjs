@@ -10,12 +10,14 @@ const router = require("./route");
 // Sequeilize
 const sequelize = require("./models").sequelize;
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 sequelize.sync();
 
 // use(), METHOD() 미들웨어 호출 함수
 // app이 요청을 받을 때마다 ()안의 함수가 실행됨
 app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
