@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import "./Main.css";
 import { Route } from "react-router-dom";
 import { List, Write, View } from "./index";
-import { Right_Write } from "./right";
+import { RightWrite } from "./right";
 import { Category } from "./left";
 
 const Main = props => {
@@ -41,7 +41,7 @@ const Main = props => {
       </div>
       <div className="Main-right">
         <Route path="/write">
-          <Right_Write titleRef={titleRef} contentsRef={contentsRef} />
+          <RightWrite titleRef={titleRef} contentsRef={contentsRef} />
         </Route>
       </div>
     </div>

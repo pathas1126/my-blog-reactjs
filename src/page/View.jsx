@@ -19,19 +19,20 @@ const View = props => {
       setData(getData.data.data[0]);
     };
     _getData();
-  }, []);
+  }, [board_id]);
 
   // board_id 게시글 조회수 증가 함수
   useEffect(() => {
     const _addViewCnt = async board_id => {
-      const addView = await axios("/update/view_cnt", {
+      // 반환 값이 필요 없는 경우 요청만 하고, 데이터는 저장하지 않아도 됨
+      await axios("/update/view_cnt", {
         method: "POST",
         header: new Headers(),
         data: { id: board_id }
       });
     };
     _addViewCnt(board_id);
-  }, []);
+  }, [board_id]);
 
   // 날짜 구하기
   let { date } = data;

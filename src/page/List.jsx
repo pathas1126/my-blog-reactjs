@@ -21,7 +21,7 @@ const List = props => {
         category = sessionStorage.getItem("category");
       }
 
-      setPage(_setPage());
+      //     setPage(_setPage());
 
       // 검색 submit으로 전송된 쿼리스트링 파싱, 저장
       let search = queryString.parse(props.location.search);
@@ -54,7 +54,7 @@ const List = props => {
     };
     _getListData();
     _setPage();
-  }, [page]);
+  }, [page, props]);
 
   // 클릭하는 페이지로 현재 페이지 바꾸기
   const _changePage = el => {

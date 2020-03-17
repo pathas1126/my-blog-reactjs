@@ -2,7 +2,8 @@ import React from "react";
 import "../Main.css";
 import axios from "axios";
 
-const Right_Write = props => {
+// 컴포넌트 이름은 PascalCase 또는 SCREAMING_SNAKE_CASE 로 작성
+const RightWrite = props => {
   const _submitBoard = async () => {
     const title = props.titleRef.current.value;
     const contents = props.contentsRef.current.value;
@@ -37,4 +38,4 @@ const Right_Write = props => {
   );
 };
 
-export default Right_Write;
+export default RightWrite;
