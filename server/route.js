@@ -14,6 +14,9 @@ router.post("/get/board", controller.get.board);
 // 게시글 수 가져오기
 router.post("/get/board_cnt", controller.get.board_cnt);
 
+// View 게시글 가져오기
+router.post("/get/board_data", controller.get.board_data);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*

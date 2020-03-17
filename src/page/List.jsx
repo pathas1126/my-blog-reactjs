@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Main.css";
 import { Search } from "./index";
+import { Link } from "react-router-dom";
 
 import queryString from "query-string";
 
@@ -79,11 +80,15 @@ const List = props => {
         <div>조회수</div>
         <div className="acenter">날짜</div>
       </div>
+
       {list && list.length > 0 ? (
         list.map((el, key) => {
+          const view_url = "/view/" + el.board_id;
           return (
             <div className="list_grid list_data" key={key}>
-              <div> {el.title}</div>
+              <div>
+                <Link to={view_url}>{el.title}</Link>
+              </div>
               <div></div>
               <div className="acenter">{el.date.slice(0, 10)}</div>
             </div>
@@ -98,6 +103,7 @@ const List = props => {
           )}
         </div>
       )}
+
       <div className="paging_div">
         <div></div>
         <div>

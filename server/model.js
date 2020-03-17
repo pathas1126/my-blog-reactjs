@@ -82,6 +82,17 @@ module.exports = {
       }).then(result => {
         callback(result);
       });
+    },
+    board_data: (body, callback) => {
+      Board.findAll({
+        where: { board_id: body.id }
+      })
+        .then(result => {
+          callback(result);
+        })
+        .catch(err => {
+          throw err;
+        });
     }
   }
 };

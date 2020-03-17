@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import "./Main.css";
 import { Route, Link, Switch } from "react-router-dom";
-import { List, Write } from "./index";
+import { List, Write, View } from "./index";
 import { Right_Write } from "./right";
 
 const Main = props => {
@@ -18,6 +18,7 @@ const Main = props => {
         <Route exact path="/write">
           <Write titleRef={titleRef} contentsRef={contentsRef} />
         </Route>
+        <Route path="/view/:data" component={View} />
       </div>
       <div className="Main-right">
         <Route path="/write">
