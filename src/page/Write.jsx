@@ -1,9 +1,12 @@
 import React from "react";
+import { CKEditor } from "../inc";
 
 const Write = props => {
+  const { contents, _getContents } = props;
+
   return (
     <div className="Write">
-      <div>
+      <div className="Title">
         <input
           ref={props.titleRef}
           name="title"
@@ -13,12 +16,13 @@ const Write = props => {
         />
       </div>
       <div>
-        <textarea
+        {/* <textarea
           ref={props.contentsRef}
           name="contents"
           className="content_txt"
           placeholder="내용을 입력하세요~"
-        ></textarea>
+        ></textarea> */}
+        <CKEditor _getContents={_getContents} contents={contents} />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import axios from "axios";
 const RightWrite = props => {
   const _submitBoard = async () => {
     const title = props.titleRef.current.value;
-    const contents = props.contentsRef.current.value;
+    const contents = props.contents;
 
     console.log(title, contents);
 

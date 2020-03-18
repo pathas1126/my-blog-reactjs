@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Route, Link } from "react-router-dom";
 import "../App.css";
 import axios from "axios";
@@ -13,6 +13,7 @@ const Header = props => {
 
   const idRef = useRef();
   const pwdRef = useRef();
+  const loginRef = useRef();
 
   // 로그인 함수, id, pwd 서버로 전송
   const _selectUserData = async e => {
@@ -140,6 +141,7 @@ const Header = props => {
               <input
                 type="button"
                 value="로그인"
+                ref={loginRef}
                 onClick={() => {
                   _selectUserData();
                 }}

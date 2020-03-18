@@ -7,16 +7,23 @@ import { Category } from "./left";
 
 const Main = props => {
   const [category, setCategory] = useState("");
+  const [contents, setContents] = useState("");
 
   const { login } = props;
 
   const titleRef = useRef();
-  const contentsRef = useRef();
 
   // 카테고리 변경 함수
   const _changeCategory = target => {
     setCategory(target);
     sessionStorage.setItem("category", target);
+  };
+
+  // 컨텐츠 저장 함수
+  const _getContents = val => {
+    const contents = val.trim();
+
+    setContents(contents);
   };
 
   // 하이어오더 함수?, 컴포넌트의 기존 props(여기서는 matchProps)에
@@ -39,13 +46,18 @@ const Main = props => {
       <div>
         <Route exact path="/" component={_withProps(List, { category })} />
         <Route exact path="/write">
-          <Write titleRef={titleRef} contentsRef={contentsRef} />
+          <Write
+            titleRef={titleRef}
+            _getContents={_getContents}
+            contents={contents}
+            {...props}
+          />
         </Route>
         <Route path="/view/:data" component={View} />
       </div>
       <div className="Main-right">
         <Route path="/write">
-          <RightWrite titleRef={titleRef} contentsRef={contentsRef} />
+          <RightWrite titleRef={titleRef} contents={contents} />
         </Route>
       </div>
     </div>

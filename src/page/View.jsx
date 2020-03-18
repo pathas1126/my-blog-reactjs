@@ -53,13 +53,16 @@ const View = props => {
             <div className="date_div">{date.slice(0, 10)}</div>
           </div>
 
-          <div>
-            <textarea
+          <div
+            className="contents_div"
+            dangerouslySetInnerHTML={{ __html: data.contents }}
+          >
+            {/* <textarea
               name="contents"
               className="content_txt"
               defaultValue={data.contents}
               readOnly
-            ></textarea>
+            ></textarea> */}
           </div>
         </div>
       )}
