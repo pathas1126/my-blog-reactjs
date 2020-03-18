@@ -7,7 +7,7 @@ const salt = require(path.join(__dirname, "config", "db.json")).salt;
 const moment = require("moment-timezone");
 const now_date = moment()
   .tz("Asia/Seoul")
-  .format();
+  .format("YYYY-MM-DD HH:mm:ss");
 console.log("nowDate>>>>>>>>>>" + now_date);
 
 module.exports = {

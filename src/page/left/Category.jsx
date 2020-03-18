@@ -115,23 +115,24 @@ const Category = props => {
           >
             전체 보기
           </Link>
-          {login && !edit ? (
-            <input
-              type="button"
-              value="Edit"
-              className="Edit"
-              onClick={() => setEdit(!edit)}
-            />
-          ) : (
-            <input
-              type="button"
-              value="Add"
-              className="Edit"
-              onClick={() => {
-                _getCatName();
-              }}
-            />
-          )}
+          {login &&
+            (!edit ? (
+              <input
+                type="button"
+                value="Edit"
+                className="Edit"
+                onClick={() => setEdit(!edit)}
+              />
+            ) : (
+              <input
+                type="button"
+                value="Add"
+                className="Edit"
+                onClick={() => {
+                  _getCatName();
+                }}
+              />
+            ))}
           <hr />
         </li>
         {category.length > 0 &&

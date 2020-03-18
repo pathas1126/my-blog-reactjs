@@ -60,7 +60,7 @@ module.exports = {
           throw err;
         });
     },
-    user: (body, hash_pw, now_date, callback) => {
+    user: (body, hash_pw, now, callback) => {
       User.count({
         where: { id: body.id }
       }).then(cnt => {
@@ -74,7 +74,7 @@ module.exports = {
             birthday: body.birthday,
             sex: body.sex,
             email: body.email,
-            signup_date: now_date
+            signup_date: now
           }).then(() => {
             callback(true);
           });
