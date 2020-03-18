@@ -141,6 +141,26 @@ module.exports = {
           throw err;
         });
     }
+  },
+  delete: {
+    category: (body, callback) => {
+      Category.destroy({
+        where: { id: body.id }
+      }).then(() => {
+        Board.update(
+          { cat_id: 0 },
+          {
+            where: { cat_id: body.id }
+          }
+        )
+          .then(() => {
+            callback(true);
+          })
+          .catch(err => {
+            throw err;
+          });
+      });
+    }
   }
 };
 

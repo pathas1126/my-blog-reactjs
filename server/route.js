@@ -26,6 +26,9 @@ router.get("/get/category", controller.get.category);
 // Category 추가
 router.post("/add/category", controller.add.category);
 
+// Category 삭제
+router.post("/delete/category", controller.delete.category);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*

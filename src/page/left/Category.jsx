@@ -20,7 +20,6 @@ const Category = props => {
   }, []);
 
   // 카테고리 데이터 추가
-
   const _addCategory = async () => {
     const add = await axios("/add/category", {
       method: "POST",
@@ -32,8 +31,8 @@ const Category = props => {
     _getCategoryData();
   };
 
+  // 카테고리 이름 받아오기
   let category_name = "";
-
   const _getCatName = () => {
     category_name = window.prompt("추가할 카테고리 이름을 입력하세요.");
     if (category_name !== "" && category_name.length > 0) {
@@ -44,10 +43,27 @@ const Category = props => {
     }
   };
 
+  // category 정보 유지
   let pre_cat = "";
   if (sessionStorage.getItem("category")) {
     pre_cat = Number(sessionStorage.getItem("category"));
   }
+
+  // 카테고리 제거
+  const _removeCategory = async category => {
+    if (window.confirm(category.name + "카테고리를 삭제하시겠습니까?")) {
+      const remove = await axios("/delete/category", {
+        method: "POST",
+        data: category,
+        headers: new Headers()
+      });
+
+      if (remove) {
+        alert("카테고리가 삭제되었습니다.");
+        _getCategoryData();
+      }
+    }
+  };
 
   return (
     <div className="Category">
@@ -99,6 +115,9 @@ const Category = props => {
                   <img
                     src="https://iconmonstr.com/wp-content/g/gd/makefg.php?i=../assets/preview/2012/png/iconmonstr-x-mark-2.png&r=0&g=0&b=0"
                     className="remove_icon"
+                    onClick={() => {
+                      _removeCategory(el);
+                    }}
                   />
                   <input
                     type="text"
