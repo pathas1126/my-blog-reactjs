@@ -161,6 +161,30 @@ module.exports = {
           });
       });
     }
+  },
+  modify: {
+    category: (body, callback) => {
+      Category.count({
+        where: { name: body.name }
+      }).then(cnt => {
+        if (cnt > 0) {
+          callback(false);
+        } else {
+          Category.update(
+            { name: body.name },
+            {
+              where: { id: body.id }
+            }
+          )
+            .then(() => {
+              callback(true);
+            })
+            .catch(err => {
+              throw err;
+            });
+        }
+      });
+    }
   }
 };
 
