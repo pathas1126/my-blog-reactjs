@@ -5,7 +5,9 @@ const hashing = require(path.join(__dirname, "config", "hashing.js"));
 const salt = require(path.join(__dirname, "config", "db.json")).salt;
 
 const moment = require("moment-timezone");
-const now_date = moment().tz("Asia/Seoul");
+const now_date = moment()
+  .tz("Asia/Seoul")
+  .format();
 console.log("nowDate>>>>>>>>>>" + now_date);
 
 module.exports = {
