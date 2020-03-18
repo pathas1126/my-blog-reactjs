@@ -32,6 +32,9 @@ router.post("/delete/category", controller.delete.category);
 // Category 수정
 router.post("/modify/category", controller.modify.category);
 
+// 회원가입 User 추가
+router.post("/add/user", controller.add.user);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*

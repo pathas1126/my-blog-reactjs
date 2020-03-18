@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./Main.css";
 import { Route } from "react-router-dom";
-import { List, Write, View } from "./index";
+import { List, Write, View, SignUp } from "./index";
 import { RightWrite } from "./right";
 import { Category } from "./left";
 
@@ -43,6 +43,7 @@ const Main = props => {
           )}
         />
       </div>
+
       <div>
         <Route exact path="/" component={_withProps(List, { category })} />
         <Route exact path="/write">
@@ -54,7 +55,11 @@ const Main = props => {
           />
         </Route>
         <Route path="/view/:data" component={View} />
+        <div>
+          <Route path="/signup" component={SignUp} />
+        </div>
       </div>
+
       <div className="Main-right">
         <Route path="/write">
           <RightWrite titleRef={titleRef} contents={contents} />

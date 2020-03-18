@@ -13,7 +13,6 @@ const Header = props => {
 
   const idRef = useRef();
   const pwdRef = useRef();
-  const loginRef = useRef();
 
   // 로그인 함수, id, pwd 서버로 전송
   const _selectUserData = async e => {
@@ -88,70 +87,80 @@ const Header = props => {
           <h3>Pathas' blog</h3>
         </Link>
       </div>
-      {login ? (
-        <h5 className="btn_cursor" onClick={_logout}>
-          관리자 로그아웃
-        </h5>
-      ) : (
-        <h5
-          className="btn_cursor"
-          onClick={() => {
-            _openModal();
-          }}
-        >
-          관리자 로그인
-        </h5>
-      )}
-      <div className="acenter">
-        <Modal
-          visible={visible}
-          width="400"
-          height="300"
-          effect="fadeInDown"
-          onClickAway={() => _closeModal()}
-        >
-          <h4 className="acenter login_tit">관리자 로그인</h4>
-          <form>
-            <div className="login_div">
-              <div className="login_input_div">
-                <p>관리자 ID</p>
-                <input
-                  ref={idRef}
-                  onChange={() => {
-                    _changeId();
-                  }}
-                  type="text"
-                  name="id"
-                />
-              </div>
 
-              <div className="login_input_div" style={{ marginTop: "40px" }}>
-                <p>관리자 Password</p>
+      <div className="acenter">
+        <ul className="btn_list">
+          {login ? (
+            <li className="btn_cursor" onClick={_logout}>
+              관리자 로그아웃
+            </li>
+          ) : (
+            <li
+              className="btn_cursor"
+              onClick={() => {
+                _openModal();
+              }}
+            >
+              관리자 로그인
+            </li>
+          )}
+          <Modal
+            visible={visible}
+            width="400"
+            height="300"
+            effect="fadeInDown"
+            onClickAway={() => _closeModal()}
+          >
+            <h4 className="acenter login_tit">관리자 로그인</h4>
+            <form>
+              <div className="login_div">
+                <div className="login_input_div">
+                  <p>관리자 ID</p>
+                  <input
+                    ref={idRef}
+                    onChange={() => {
+                      _changeId();
+                    }}
+                    type="text"
+                    name="id"
+                  />
+                </div>
+
+                <div className="login_input_div" style={{ marginTop: "40px" }}>
+                  <p>관리자 Password</p>
+                  <input
+                    ref={pwdRef}
+                    onChange={() => _changePwd()}
+                    type="password"
+                    name="password"
+                  />
+                </div>
+              </div>
+            </form>
+
+            <div className="submit_div">
+              <div>
                 <input
-                  ref={pwdRef}
-                  onChange={() => _changePwd()}
-                  type="password"
-                  name="password"
+                  type="button"
+                  value="로그인"
+                  onClick={() => {
+                    _selectUserData();
+                  }}
+                />
+              </div>
+              <div>
+                <input
+                  value="취소"
+                  type="button"
+                  onClick={() => _closeModal()}
                 />
               </div>
             </div>
-          </form>
-          <div className="submit_div">
-            <div>
-              <input
-                type="button"
-                value="로그인"
-                ref={loginRef}
-                onClick={() => {
-                  _selectUserData();
-                }}
-              />
-            </div>
-            <div>
-              <input value="취소" type="button" onClick={() => _closeModal()} />
-            </div>
-          </div>
-        </Modal>
+          </Modal>
+          <li className="btn_cursor">
+            <Link to="signup">회원가입</Link>
+          </li>
+        </ul>
       </div>
     </div>
   );

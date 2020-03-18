@@ -42,6 +42,7 @@ db.Class = require("./class")(sequelize, Sequelize);
 db.Admin = require("./admin")(sequelize, Sequelize);
 db.Board = require("./board")(sequelize, Sequelize);
 db.Category = require("./category")(sequelize, Sequelize);
+db.User = require("./user")(sequelize, Sequelize);
 
 // DB 관계 설정, foreignKey, Source - Target
 db.Category.hasMany(db.Board, {

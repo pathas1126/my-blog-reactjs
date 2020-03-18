@@ -5,6 +5,7 @@ const {
   Admin,
   Board,
   Category,
+  User,
   Sequelize: { Op }
 } = require("./models");
 
@@ -58,6 +59,27 @@ module.exports = {
         .catch(err => {
           throw err;
         });
+    },
+    user: (body, hash_pw, now_date, callback) => {
+      User.count({
+        where: { id: body.id }
+      }).then(cnt => {
+        if (cnt > 0) {
+          callback(false);
+        } else {
+          User.create({
+            admin: "N",
+            id: body.id,
+            password: hash_pw,
+            birthday: body.birthday,
+            sex: body.sex,
+            email: body.email,
+            signup_date: now_date
+          }).then(() => {
+            callback(true);
+          });
+        }
+      });
     }
   },
   get: {

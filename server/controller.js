@@ -4,6 +4,10 @@ const model = require("./model");
 const hashing = require(path.join(__dirname, "config", "hashing.js"));
 const salt = require(path.join(__dirname, "config", "db.json")).salt;
 
+const moment = require("moment-timezone");
+const now_date = moment().tz("Asia/Seoul");
+console.log("nowDate>>>>>>>>>>" + now_date);
+
 module.exports = {
   api: {
     // 관리자 로그인
@@ -49,6 +53,14 @@ module.exports = {
         }
 
         res.send(obj);
+      });
+    },
+    user: (req, res) => {
+      const body = req.body;
+      const hash_pw = hashing.enc(body.id, body.password, salt);
+
+      model.add.user(body, hash_pw, now_date, result => {
+        res.send(result);
       });
     }
     /*
