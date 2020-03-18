@@ -5,16 +5,44 @@ import { Link } from "react-router-dom";
 
 const Category = props => {
   const [category, setCategory] = useState([]);
-  const { _changeCategory } = props;
+  const [edit, setEdit] = useState(false);
+  const { _changeCategory, login } = props;
+
+  // 카테고리 데이터 받아오기
+  const _getCategoryData = async () => {
+    const getData = await axios("/get/category");
+    console.log(getData);
+    setCategory(getData.data);
+  };
 
   useEffect(() => {
-    const _getCategoryData = async () => {
-      const getData = await axios("/get/category");
-      console.log(getData);
-      setCategory(getData.data);
-    };
     _getCategoryData();
   }, []);
+
+  // 카테고리 데이터 추가
+
+  const _addCategory = async () => {
+    const add = await axios("/add/category", {
+      method: "POST",
+      data: { name: category_name },
+      headers: new Headers()
+    });
+
+    alert(add.data.msg);
+    _getCategoryData();
+  };
+
+  let category_name = "";
+
+  const _getCatName = () => {
+    category_name = window.prompt("추가할 카테고리 이름을 입력하세요.");
+    if (category_name !== "" && category_name.length > 0) {
+      category_name = category_name.trim();
+      _addCategory();
+    } else {
+      return alert("최소 1글자 이상 입력해야 합니다!!");
+    }
+  };
 
   let pre_cat = "";
   if (sessionStorage.getItem("category")) {
@@ -32,21 +60,55 @@ const Category = props => {
           >
             전체 보기
           </Link>
+          {login && !edit ? (
+            <input
+              type="button"
+              value="Edit"
+              className="Edit"
+              onClick={() => setEdit(!edit)}
+            />
+          ) : (
+            <input
+              type="button"
+              value="Add"
+              className="Edit"
+              onClick={() => {
+                _getCatName();
+              }}
+            />
+          )}
           <hr />
         </li>
         {category.length > 0 &&
           category.map((el, key) => {
-            return (
-              <li key={key}>
-                <Link
-                  to="/"
-                  className={pre_cat === el.id ? "pre_cat" : null}
-                  onClick={() => _changeCategory(el.id)}
-                >
-                  {el.name}
-                </Link>
-              </li>
-            );
+            if (!edit) {
+              return (
+                <li key={key}>
+                  <Link
+                    to="/"
+                    className={pre_cat === el.id ? "pre_cat" : null}
+                    onClick={() => _changeCategory(el.id)}
+                  >
+                    {el.name}
+                  </Link>
+                </li>
+              );
+            } else {
+              return (
+                <li key={key}>
+                  <img
+                    src="https://iconmonstr.com/wp-content/g/gd/makefg.php?i=../assets/preview/2012/png/iconmonstr-x-mark-2.png&r=0&g=0&b=0"
+                    className="remove_icon"
+                  />
+                  <input
+                    type="text"
+                    maxLength="20"
+                    className="edit_input"
+                    defaultValue={el.name}
+                  />
+                </li>
+              );
+            }
           })}
       </ul>
     </div>

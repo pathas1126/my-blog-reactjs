@@ -5,20 +5,14 @@ import axios from "axios";
 
 import Modal from "react-awesome-modal";
 
-const Header = () => {
+const Header = props => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
-  const [login, setLogin] = useState(false);
+  const { login } = props;
 
   const idRef = useRef();
   const pwdRef = useRef();
-
-  useEffect(() => {
-    if (sessionStorage.login) {
-      setLogin(true);
-    }
-  }, []);
 
   // 로그인 함수, id, pwd 서버로 전송
   const _selectUserData = async e => {
@@ -42,8 +36,7 @@ const Header = () => {
       console.log(res.data.msg);
 
       if (res.data.suc) {
-        sessionStorage.setItem("login", true);
-        setLogin(true);
+        props._login();
         _closeModal();
 
         return alert("로그인 되었습니다.");
@@ -56,8 +49,7 @@ const Header = () => {
   // 로그아웃 함수
   const _logout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
-      sessionStorage.removeItem("login");
-      setLogin(false);
+      props._logout();
     }
   };
 
@@ -79,6 +71,7 @@ const Header = () => {
     const pwd = pwdRef.current.value;
     setPwd(pwd);
   };
+
   return (
     <div className="header_grid">
       <div className="acenter">

@@ -22,7 +22,9 @@ module.exports = {
         }
         res.send(obj);
       });
-    },
+    }
+  },
+  add: {
     // 게시글 추가
     board: (req, res) => {
       const body = req.body;
@@ -31,6 +33,22 @@ module.exports = {
         if (result) {
           res.send(true);
         }
+      });
+    },
+    category: (req, res) => {
+      const body = req.body;
+
+      model.add.category(body, result => {
+        let obj = {};
+        if (result) {
+          obj["suc"] = true;
+          obj["msg"] = "카테고리가 생성되었습니다.";
+        } else {
+          obj["suc"] = false;
+          obj["msg"] = "이미 있는 카테고리 입니다.";
+        }
+
+        res.send(obj);
       });
     }
     /*

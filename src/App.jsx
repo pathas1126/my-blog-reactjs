@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Header } from "./inc";
 import { Main } from "./page";
 
 const App = () => {
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.login) {
+      setLogin(true);
+    }
+  }, [login]);
+
+  const _login = () => {
+    setLogin(true);
+    return sessionStorage.setItem("login", true);
+  };
+
+  const _logout = () => {
+    setLogin(false);
+    return sessionStorage.removeItem("login");
+  };
   /* 
   const [name, setName] = useState("");
   const [list, setList] = useState("");
@@ -92,8 +109,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      <Main />
+      <Header login={login} _login={_login} _logout={_logout} />
+      <Main login={login} />
       {/* <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />

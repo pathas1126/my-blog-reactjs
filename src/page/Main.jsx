@@ -8,6 +8,8 @@ import { Category } from "./left";
 const Main = props => {
   const [category, setCategory] = useState("");
 
+  const { login } = props;
+
   const titleRef = useRef();
   const contentsRef = useRef();
 
@@ -22,14 +24,16 @@ const Main = props => {
   const _withProps = (Component, props) => matchProps => (
     <Component {...props} {...matchProps} />
   );
-  console.log(category);
+
   return (
     <div className="Main">
       <div className="Main-left">
         <Route
           exact
           path="/"
-          render={props => <Category _changeCategory={_changeCategory} />}
+          render={props => (
+            <Category _changeCategory={_changeCategory} login={login} />
+          )}
         />
       </div>
       <div>

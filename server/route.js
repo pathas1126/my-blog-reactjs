@@ -6,7 +6,7 @@ const controller = require("./controller");
 router.post("/send/pw", controller.api.sendPw);
 
 // 게시글 추가
-router.post("/add/board", controller.api.board);
+router.post("/add/board", controller.add.board);
 
 // 게시글 목록 불러오기
 router.post("/get/board", controller.get.board);
@@ -22,6 +22,9 @@ router.post("/update/view_cnt", controller.update.view_cnt);
 
 // Category 정보 조회
 router.get("/get/category", controller.get.category);
+
+// Category 추가
+router.post("/add/category", controller.add.category);
 
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
