@@ -10,6 +10,9 @@ const now_date = moment()
   .format("YYYY-MM-DD HH:mm:ss");
 console.log("nowDate>>>>>>>>>>" + now_date);
 
+// 사용자 ip 가져오기
+const user_ip = require("ip");
+
 module.exports = {
   api: {
     // 관리자 로그인
@@ -22,6 +25,8 @@ module.exports = {
         if (result[0]) {
           obj["suc"] = true;
           obj["msg"] = "로그인 성공";
+          obj["ip"] = user_ip.address();
+          obj["data"] = result;
         } else {
           obj["suc"] = false;
           obj["msg"] = "로그인 실패";

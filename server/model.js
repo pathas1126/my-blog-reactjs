@@ -2,7 +2,6 @@ const sequelize = require("./models").sequelize;
 
 // admins 테이블을 불러오는 코드
 const {
-  Admin,
   Board,
   Category,
   User,
@@ -14,8 +13,8 @@ sequelize.query("SET NAMES utf8");
 module.exports = {
   api: {
     searchInfo: (body, hash, callback) => {
-      Admin.findAll({
-        where: { [Op.and]: [{ user_id: body.id, password: hash }] }
+      User.findAll({
+        where: { [Op.and]: [{ id: body.id, password: hash }] }
       })
         .then(data => {
           callback(data);

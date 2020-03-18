@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Category = props => {
   const [category, setCategory] = useState([]);
   const [edit, setEdit] = useState(false);
-  const { _changeCategory, login } = props;
+  const { _changeCategory, login, admin, user_ip } = props;
 
   // 카테고리 데이터 받아오기
   const _getCategoryData = async () => {
@@ -116,6 +116,8 @@ const Category = props => {
             전체 보기
           </Link>
           {login &&
+            admin === "Y" &&
+            user_ip === "192.168.200.143" &&
             (!edit ? (
               <input
                 type="button"

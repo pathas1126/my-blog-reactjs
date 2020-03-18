@@ -5,21 +5,38 @@ import { Main } from "./page";
 
 const App = () => {
   const [login, setLogin] = useState(false);
+  const [admin, setAdmin] = useState("");
+  const [user_ip, setUser_ip] = useState("");
 
   useEffect(() => {
-    if (sessionStorage.login) {
-      setLogin(true);
+    if (sessionStorage.login && sessionStorage.IP) {
+      setLogin(JSON.parse(sessionStorage.login)[0].id);
+      setAdmin(JSON.parse(sessionStorage.login)[0].admin);
+      setUser_ip(JSON.parse(sessionStorage.IP));
+      console.log(login, admin, user_ip);
     }
-  }, [login]);
+  }, [admin, login, user_ip]);
 
-  const _login = () => {
-    setLogin(true);
-    return sessionStorage.setItem("login", true);
+  const _login = data => {
+    console.log(data);
+    sessionStorage.setItem("login", JSON.stringify(data.data));
+    sessionStorage.setItem("IP", JSON.stringify(data.ip));
+
+    setLogin(JSON.parse(sessionStorage.login)[0].id);
+    setAdmin(JSON.parse(sessionStorage.login)[0].admin);
+    setUser_ip(JSON.parse(sessionStorage.IP));
+    console.log(login, admin, user_ip);
+
+    return window.location.reload();
   };
 
   const _logout = () => {
     setLogin(false);
-    return sessionStorage.removeItem("login");
+    setAdmin(false);
+    setUser_ip("");
+
+    sessionStorage.removeItem("login");
+    sessionStorage.removeItem("IP");
   };
   /* 
   const [name, setName] = useState("");
@@ -109,8 +126,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header login={login} _login={_login} _logout={_logout} />
-      <Main login={login} />
+      <Header
+        admin={admin}
+        user_ip={user_ip}
+        login={login}
+        _login={_login}
+        _logout={_logout}
+      />
+      <Main admin={admin} user_ip={user_ip} login={login} />
       {/* <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />

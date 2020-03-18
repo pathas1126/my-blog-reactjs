@@ -9,7 +9,7 @@ const Header = props => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
-  const { login } = props;
+  const { login, admin, user_ip } = props;
 
   const idRef = useRef();
   const pwdRef = useRef();
@@ -36,7 +36,7 @@ const Header = props => {
       console.log(res.data.msg);
 
       if (res.data.suc) {
-        props._login();
+        props._login(res.data);
         _closeModal();
 
         return alert("로그인 되었습니다.");
@@ -75,7 +75,7 @@ const Header = props => {
   return (
     <div className="header_grid">
       <div className="acenter">
-        {login && (
+        {login && admin === "Y" && user_ip === "192.168.200.143" && (
           <h5>
             <Link to="/write">포스트 작성</Link>
           </h5>
@@ -92,7 +92,7 @@ const Header = props => {
         <ul className="btn_list">
           {login ? (
             <li className="btn_cursor" onClick={_logout}>
-              관리자 로그아웃
+              로그아웃
             </li>
           ) : (
             <li
@@ -101,7 +101,7 @@ const Header = props => {
                 _openModal();
               }}
             >
-              관리자 로그인
+              로그인
             </li>
           )}
           <Modal
@@ -111,11 +111,11 @@ const Header = props => {
             effect="fadeInDown"
             onClickAway={() => _closeModal()}
           >
-            <h4 className="acenter login_tit">관리자 로그인</h4>
+            <h4 className="acenter login_tit">로그인</h4>
             <form>
               <div className="login_div">
                 <div className="login_input_div">
-                  <p>관리자 ID</p>
+                  <p> ID</p>
                   <input
                     ref={idRef}
                     onChange={() => {
@@ -127,7 +127,7 @@ const Header = props => {
                 </div>
 
                 <div className="login_input_div" style={{ marginTop: "40px" }}>
-                  <p>관리자 Password</p>
+                  <p>Password</p>
                   <input
                     ref={pwdRef}
                     onChange={() => _changePwd()}
@@ -157,9 +157,11 @@ const Header = props => {
               </div>
             </div>
           </Modal>
-          <li className="btn_cursor">
-            <Link to="signup">회원가입</Link>
-          </li>
+          {!login && (
+            <li className="btn_cursor">
+              <Link to="signup">회원가입</Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

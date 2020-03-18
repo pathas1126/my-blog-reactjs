@@ -9,7 +9,7 @@ const Main = props => {
   const [category, setCategory] = useState("");
   const [contents, setContents] = useState("");
 
-  const { login } = props;
+  const { login, admin, user_ip } = props;
 
   const titleRef = useRef();
 
@@ -39,7 +39,12 @@ const Main = props => {
           exact
           path="/"
           render={props => (
-            <Category _changeCategory={_changeCategory} login={login} />
+            <Category
+              _changeCategory={_changeCategory}
+              login={login}
+              admin={admin}
+              user_ip={user_ip}
+            />
           )}
         />
       </div>

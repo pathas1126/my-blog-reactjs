@@ -39,7 +39,7 @@ db.Teacher = require("./teacher")(sequelize, Sequelize);
 db.Class = require("./class")(sequelize, Sequelize);
 */
 
-db.Admin = require("./admin")(sequelize, Sequelize);
+// User테이블에 통합 db.Admin = require("./admin")(sequelize, Sequelize);
 db.Board = require("./board")(sequelize, Sequelize);
 db.Category = require("./category")(sequelize, Sequelize);
 db.User = require("./user")(sequelize, Sequelize);
