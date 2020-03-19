@@ -6,18 +6,28 @@ import { RightWrite } from "./right";
 import { Category } from "./left";
 
 const Main = props => {
-  const [category, setCategory] = useState("");
+  const [category] = useState("");
   const [contents, setContents] = useState("");
 
-  const { login, admin, user_ip } = props;
+  const {
+    login,
+    admin,
+    user_ip,
+    list_data,
+    list_all_page,
+    list_search,
+    list_page,
+    _changePage,
+    _changeCategory
+  } = props;
 
   const titleRef = useRef();
 
-  // 카테고리 변경 함수
-  const _changeCategory = target => {
-    setCategory(target);
-    sessionStorage.setItem("category", target);
-  };
+  // 카테고리 변경 함수, App 에서 넘겨받음
+  // const _changeCategory = target => {
+  //   setCategory(target);
+  //   sessionStorage.setItem("category", target);
+  // };
 
   // 컨텐츠 저장 함수
   const _getContents = val => {
@@ -50,7 +60,18 @@ const Main = props => {
       </div>
 
       <div>
-        <Route exact path="/" component={_withProps(List, { category })} />
+        <Route
+          exact
+          path="/"
+          component={_withProps(List, {
+            category,
+            list_data,
+            list_all_page,
+            list_page,
+            _changePage,
+            list_search
+          })}
+        />
         <Route exact path="/write">
           <Write
             titleRef={titleRef}

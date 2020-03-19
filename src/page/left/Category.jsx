@@ -117,7 +117,7 @@ const Category = props => {
           </Link>
           {login &&
             admin === "Y" &&
-            user_ip === "192.168.200.143" &&
+            (user_ip === "192.168.200.143" || user_ip === "192.168.0.241") &&
             (!edit ? (
               <input
                 type="button"

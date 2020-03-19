@@ -3,7 +3,7 @@ import "./Main.css";
 
 const Search = props => {
   const inputRef = useRef();
-  const { search } = props;
+  const { list_search: search } = props;
 
   // search 값이 있는 경우 input 값에 search 유지
   if (search) {

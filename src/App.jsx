@@ -1,22 +1,106 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { Header } from "./inc";
 import { Main } from "./page";
+import queryString from "query-string";
+import axios from "axios";
 
-const App = () => {
+const App = props => {
+  // login 관련 state
   const [login, setLogin] = useState(false);
   const [admin, setAdmin] = useState("");
   const [user_ip, setUser_ip] = useState("");
+  const [login_modal, setLogin_modal] = useState(false);
 
+  // List 관련 state
+  const [list_data, setList_data] = useState([]);
+  const [list_page, setList_page] = useState(1);
+  const list_limit = 10;
+  const [list_all_page, setList_all_page] = useState([]);
+  const [list_search, setList_search] = useState("");
+  const [_, setCategory] = useState("");
+
+  // List 가져오는 함수
+  const _setPage = () => {
+    if (sessionStorage.page) {
+      setList_page(Number(sessionStorage.page));
+      return Number(sessionStorage.page);
+    }
+    setList_page(1);
+    return 1;
+  };
+
+  const _changePage = el => {
+    setList_page(el);
+    sessionStorage.setItem("page", el);
+
+    return _getListData();
+  };
+
+  const _getListData = useCallback(async () => {
+    const list_pages = _setPage();
+
+    let categories = "";
+    if (sessionStorage.getItem("category")) {
+      categories = sessionStorage.getItem("category");
+    }
+
+    let search = "";
+    if (queryString.parse(props.location.search)) {
+      search = queryString.parse(props.location.search).search;
+    }
+
+    // Board 테이블 데이터 전체 수
+    const total_cnt = await axios("/get/board_cnt", {
+      method: "POST",
+      headers: new Headers(),
+      data: { search, category: categories }
+    });
+
+    // List 데이터 가져오기
+    const total_list = await axios("/get/board", {
+      method: "POST",
+      headers: new Headers(),
+      data: {
+        limit: list_limit,
+        page: list_pages,
+        search,
+        category: categories
+      }
+    });
+
+    // 전체 페이지 수 구하기
+    let page_arr = [];
+
+    for (let i = 1; i <= Math.ceil(total_cnt.data.cnt / list_limit); i++) {
+      page_arr.push(i);
+    }
+
+    setList_data(JSON.stringify(total_list.data));
+    setList_all_page(page_arr);
+    setList_search(search);
+  }, [props.location.search]);
+
+  // Category 변경
+  const _changeCategory = target => {
+    sessionStorage.setItem("category", target);
+    setCategory(target);
+
+    return _getListData();
+  };
+
+  // 렌더링 될 때 sessionStorage값으로 state 값 저장
   useEffect(() => {
+    _getListData();
     if (sessionStorage.login && sessionStorage.IP) {
       setLogin(JSON.parse(sessionStorage.login)[0].id);
       setAdmin(JSON.parse(sessionStorage.login)[0].admin);
       setUser_ip(JSON.parse(sessionStorage.IP));
       console.log(login, admin, user_ip);
     }
-  }, [admin, login, user_ip]);
+  }, [_getListData, admin, login, user_ip]);
 
+  // 로그인 함수
   const _login = data => {
     console.log(data);
     sessionStorage.setItem("login", JSON.stringify(data.data));
@@ -30,6 +114,7 @@ const App = () => {
     return window.location.reload();
   };
 
+  // 로그아웃 함수
   const _logout = () => {
     setLogin(false);
     setAdmin(false);
@@ -38,6 +123,12 @@ const App = () => {
     sessionStorage.removeItem("login");
     sessionStorage.removeItem("IP");
   };
+
+  //
+  const _toggleModal = boolean => {
+    setLogin_modal(boolean);
+  };
+
   /* 
   const [name, setName] = useState("");
   const [list, setList] = useState("");
@@ -132,8 +223,22 @@ const App = () => {
         login={login}
         _login={_login}
         _logout={_logout}
+        login_modal={login_modal}
+        _toggleModal={_toggleModal}
       />
-      <Main admin={admin} user_ip={user_ip} login={login} />
+      <Main
+        admin={admin}
+        user_ip={user_ip}
+        login={login}
+        login_modal={login_modal}
+        _toggleModal={_toggleModal}
+        list_data={list_data}
+        list_all_page={list_all_page}
+        list_search={list_search}
+        list_page={list_page}
+        _changePage={_changePage}
+        _changeCategory={_changeCategory}
+      />
       {/* <form method="POST" onSubmit={_addData}>
         <input type="text" maxLength="10" onChange={e => _nameUpdate(e)} />
         <input type="submit" value="Add" />
