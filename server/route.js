@@ -35,6 +35,9 @@ router.post("/modify/category", controller.modify.category);
 // 회원가입 User 추가
 router.post("/add/user", controller.add.user);
 
+// 아이디 찾기
+router.post("/search/id", controller.search.id);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*
