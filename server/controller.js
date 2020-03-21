@@ -8,10 +8,43 @@ const moment = require("moment-timezone");
 const now_date = moment()
   .tz("Asia/Seoul")
   .format("YYYY-MM-DD HH:mm:ss");
-console.log("nowDate>>>>>>>>>>" + now_date);
 
 // 사용자 ip 가져오기
 const user_ip = require("ip");
+
+// 이메일 보내기
+const nodeMailer = require("nodemailer");
+
+// 메일 발송 계정 설정
+const mailPoster = nodeMailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "gmail 주소 입력",
+    pass: "gmail 비밀 번호 입력"
+  }
+});
+
+// 메일 수신 계정 설정
+const mailOpt = (user_data, title, contents) => {
+  const mailOptions = {
+    from: "gamil 주소 입력",
+    to: user_data.email,
+    subject: title,
+    text: contents
+  };
+  return mailOptions;
+};
+
+// 메일 전송 함수
+const sendMail = mailOption => {
+  mailPoster.sendMail(mailOption, (error, info) => {
+    if (error) {
+      console.error("에러>>>>>>>" + error);
+    } else {
+      console.log("전송 완료 " + info.response);
+    }
+  });
+};
 
 module.exports = {
   api: {
@@ -146,6 +179,14 @@ module.exports = {
           }
         });
       }
+    },
+    pw: (req, res) => {
+      const body = req.body;
+      const hash_pw = hashing.enc(body.user_id, body.change_password, salt);
+
+      model.update.pw(body, hash_pw, result => {
+        res.send(true);
+      });
     }
   },
   delete: {
@@ -183,6 +224,38 @@ module.exports = {
 
       model.search.id(body, result => {
         res.send(result);
+      });
+    },
+    pw: (req, res) => {
+      const body = req.body;
+
+      model.search.pw(body, result => {
+        // 클라이언트로 전송할 데이터를 담을 객체
+        let res_data = {};
+
+        // 데이터 조회에 성공할 경우 이메일 전송
+        if (result[0]) {
+          const title = "비밀번호 조회 인증에 대한 6자리 숫자입니다.";
+          const contents = () => {
+            let number = "";
+            let random = 0;
+
+            for (let i = 0; i < 6; i++) {
+              random = Math.trunc(Math.random() * (9 - 0) + 0);
+              number += random;
+            }
+            res_data["secret"] = number;
+            return `인증 칸에 아래의 숫자를 입력해주세요
+            ${number}`;
+          };
+          const mailOption = mailOpt(result[0].dataValues, title, contents());
+          sendMail(mailOption);
+          res_data["result"] = result;
+          res.send(res_data);
+        } else {
+          // 데이터가 조회되지 않을 경우
+          res.send(false);
+        }
       });
     }
   }

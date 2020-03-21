@@ -340,7 +340,9 @@ input[name="search_id_birthday"] {
   text-align: center;
 }
 input[name="search_id_name"],
-input[name="search_id_email"] {
+input[name="search_id_email"],
+input[name="search_pw_id"],
+input[name="search_pw_email"] {
   width: 35%;
 }
 input[name="search_id_sex"] {
@@ -355,13 +357,15 @@ input[name="search_id_sex"] {
   margin-top: 10px;
 }
 
-input[name="search_id_write_email"] {
+input[name="search_id_write_email"],
+input[name="search_pw_write_email"] {
   margin-left: 5px;
   padding: 5px;
   width: 70%;
 }
 
-input[name="search_id_submit"] {
+input[name="search_id_submit"],
+input[name="search_pw_submit"] {
   border: solid 1px #ababab;
   border-radius: 4px;
   margin-left: 50px;
@@ -392,5 +396,45 @@ input[name="search_id_submit"] {
 }
 input[name="search_id_back"] {
   margin-top: 20px;
+  cursor: pointer;
+}
+
+.search_result_div div {
+  margin-top: 70px;
+}
+
+input[name="pw_secret"] {
+  padding: 3px;
+  margin-top: 10px;
+  margin-right: 40px;
+}
+
+input[name="pw_secret_submit"] {
+  position: absolute;
+  margin: 10px 0px 0px -30px;
+  cursor: pointer;
+}
+
+/* CHANGE_PASSWORD */
+.change_password_div div {
+  margin-top: 30px;
+}
+.change_password_div div span {
+  line-height: 0px;
+}
+.change_password_div div span p {
+  color: #ababab;
+  font-size: 14px;
+}
+
+.change_password_div div div {
+  line-height: 0px;
+  margin-top: 50px;
+}
+
+input[name="change_password_submit"] {
+  margin-top: 30px;
+  border: solid 1px #ababab;
+  border-radius: 3px;
   cursor: pointer;
 }

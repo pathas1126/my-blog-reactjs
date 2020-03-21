@@ -161,6 +161,20 @@ module.exports = {
         .catch(err => {
           throw err;
         });
+    },
+    pw: (body, hash_pw, callback) => {
+      User.update(
+        { password: hash_pw },
+        {
+          where: { id: body.user_id }
+        }
+      )
+        .then(() => {
+          callback(true);
+        })
+        .catch(err => {
+          throw err;
+        });
     }
   },
   delete: {
@@ -214,6 +228,18 @@ module.exports = {
           name: body.user_name,
           birthday: body.user_birthday,
           sex: body.user_sex,
+          email: body.user_email
+        }
+      })
+        .then(result => callback(result))
+        .catch(err => {
+          throw err;
+        });
+    },
+    pw: (body, callback) => {
+      User.findAll({
+        where: {
+          id: body.user_id,
           email: body.user_email
         }
       })

@@ -38,6 +38,12 @@ router.post("/add/user", controller.add.user);
 // 아이디 찾기
 router.post("/search/id", controller.search.id);
 
+// 비밀번호 찾기
+router.post("/search/pw", controller.search.pw);
+
+// 비밀번호 변경
+router.post("/update/pw", controller.update.pw);
+
 // 라우터 경로 설정
 // router.HTTP 메소드 형태
 /*
